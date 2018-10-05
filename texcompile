@@ -1,0 +1,8 @@
+#!/bin/bash
+TEXFILENAME="$1"
+FILE="${TEXFILENAME%.*}"
+rm -rf ${FILE}.out ${FILE}.aux ${FILE}.bbl ${FILE}.blg ${FILE}.log ${FILE}Notes.bib
+pdflatex ${FILE}.tex
+pdflatex ${FILE}.tex
+pdflatex ${FILE}.tex
+rm -rf ${FILE}.out ${FILE}.aux ${FILE}.bbl ${FILE}.blg ${FILE}.log ${FILE}Notes.bib

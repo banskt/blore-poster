@@ -1,0 +1,481 @@
+% --------------------------------------------------------------------------- 
+% Poster Template for Saikat Banerjee 
+%
+% Created with Brian Amberg's LaTeX Poster Template
+% --------------------------------------------------------------------------- 
+\documentclass[a0paper,portrait,debug]{baposter}
+
+
+\usepackage{relsize}	% For \smaller
+\usepackage{url}	% For \url
+\usepackage{epstopdf}	% EPS files automatically to PDF to for pdflatex
+\usepackage{multicol}
+%\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\graphicspath{{images/}}	% Root directory of the pictures 
+\usepackage{helvet} %to use helvet font
+
+\usepackage{charter}
+%\usepackage[defaultsans]{droidsans}
+
+\usepackage{siunitx}
+\renewcommand{\familydefault}{\sfdefault} %set default font to sans-serif for entire document.
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{decision} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, line width=1pt, text centered, align=flush center, draw=primary, fill=highlight!20]
+\tikzstyle{origin} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, line width=1pt, text centered, align=flush center, draw=subdue]%text=secondary]
+\tikzstyle{highlight} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, line width=1pt, text centered, align=flush center, draw=secondary, fill=important!30]%text=secondary]
+\tikzstyle{textbox} = [rectangle, text centered, align=flush center] 
+\tikzstyle{doubt} = [circle, line width=1pt, text centered, align=flush center, draw=secondary, fill=important!20]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{line} = [thick, -]
+
+\usepackage{varwidth}
+
+\usepackage{bbding}
+
+%------------------------------------------
+\DeclareMathOperator{\logistic}{lf}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\prob}{Pr}
+\newcommand{\pvalue}{\mbox{$p\,$-value}}
+\newcommand{\pvalues}{\mbox{$p\,$-values}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vX}{\mathbf{X}}
+\newcommand{\vY}{\mathbf{Y}}
+\newcommand{\vr}{\mathbf{r}}
+\newcommand{\vtilde}{\tilde{\vv}}
+\newcommand{\tss}[1]{\ensuremath{^{\text{\kern1pt\scriptsize #1}}}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\identity}{\mathds{I}}
+
+
+\newcommand{\eg}{{\it e.g.\ }}
+\newcommand{\ie}{{\it i.e.\ }}
+\newcommand{\etal}{{\it et al.\ }}
+\newcommand{\avg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\prth}[1]{\left( #1 \right)}
+\newcommand{\brcs}[1]{\left\{ #1 \right\}}
+\newcommand{\sqbr}[1]{\left[ #1 \right]}
+\newcommand{\equn}{Eq}
+\newcommand{\fign}{Fig}
+\newcommand{\secn}{Sec.}
+\newcommand{\figwidth}{1.0}
+%-------------------------------------------
+
+  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Color Definitions %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{gcmorange}{cmyk}{0,0.24,0.86,0.07}
+%\definecolor{gcmorange}{cmyk}{0,0.43,0.95,0.01}
+\definecolor{lightgray}{cmyk}{0,0.0,0.05,0.0}
+\definecolor{lightblue}{cmyk}{0.06,0.03,0,0}
+\definecolor{bluestone}{cmyk}{0.72,0.54,0,0.2}
+
+\definecolor{primary}{RGB}{42,83,193} %% Cerulean blue #2A53C1
+%\definecolor{primary}{cmyk}{0.782, 0.57, 0, 0.243}
+\definecolor{secondary}{RGB}{240,60,63} %% Coral red #F03C3F
+\definecolor{highlight}{RGB}{0, 180, 255} %% Blue bolt #00B4FF
+\definecolor{light}{RGB}{255,255,243} %% White #FFFFF3
+\definecolor{subdue}{RGB}{107,110,108} %% Grey #6B6E6C
+\definecolor{black}{RGB}{43,40,40} %% #2B2828
+\definecolor{hidden}{RGB}{160, 160, 160}
+\definecolor{important}{RGB}{255, 142, 0} %% orange yellow #FF8E00
+\definecolor{sub1}{RGB}{0, 125, 52} %% vivid green #007D34
+\definecolor{sub2}{RGB}{255, 142, 0} %% strong violet #53377A
+
+\definecolor{mpibpcgreen}{RGB}{190, 214, 52} %% orange yellow #FF8E00
+\definecolor{mpibpcblue}{RGB}{26, 135, 162} %% vivid green #007D34
+\definecolor{mpibpcmaroon}{RGB}{176, 88, 97} %% strong violet #53377A
+
+
+\tikzstyle{highlight} = [rectangle, rounded corners, inner sep=1em, line width = 1pt, draw=secondary, fill=important!30]
+\tikzstyle{highlightnosep} = [rectangle, rounded corners, inner sep=0.5em, line width = 1pt, draw=secondary, fill=important!30]
+\tikzstyle{infoblock} = [rectangle, rounded corners, inner sep=1em, line width = 1pt, draw=primary, fill=highlight!20]
+\tikzstyle{mathblock} = [rectangle, rounded corners, inner sep=1em, line width = 1pt, draw=primary, fill=highlight!20]
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%% Poster Start %%%%%
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+%%%%reduce space between formulas
+\setlength{\belowdisplayskip}{0pt} 
+\setlength{\belowdisplayshortskip}{0pt} 
+\setlength{\abovedisplayskip}{0pt} 
+\setlength{\abovedisplayshortskip}{0pt}
+
+
+\begin{poster}
+{
+% HINT: No newlines between options!
+%
+% SET LAYOUT PARAMETERS
+%
+	grid=false,
+	columns=4,
+	colspacing=1em,				% 1em is size of 'M' letter
+	headerheight=17em, 				% header of poster
+	eyecatcher=false,
+	%
+	% shades
+	background=plain,
+  	boxshade=plain,
+	headershade=plain,  	
+  	%
+  	%shapes
+	headershape=roundedright,		%boxtop
+	textborder=rectangle,			%boxbottom
+	linewidth=0.1ex,				%borderwidth
+	headerfont=\rmfamily\scshape\bfseries\large,
+	headerborder=open,
+  	%
+  	% colors
+	bgColorOne=light, 
+	borderColor=primary,
+	headerColorOne=primary,
+	headerColorTwo=primary,
+	headerFontColor=white,
+	boxColorOne=white,
+	%
+	%some positioning stuff
+	boxpadding=0.5em,					%space between text and box [default 0.5em]
+	boxheaderheight=2.3em				%height of box headers
+}
+{
+	%\includegraphics[width=6em]{logo_LMU} 
+
+}
+%%% Title %%%
+{
+	{\color{primary}B-LORE}
+}
+%%% Sub-title
+{
+	{\color{primary}B}ayesian multiple {\color{primary}lo}gistic {\color{primary}re}gression for case-control GWAS%
+}
+%%% Authors %%
+{		
+	\underline{Saikat Banerjee}\textsuperscript{1}, Lingyao Zeng\textsuperscript{2}, Heribert Schunkert\textsuperscript{2} and Johannes S\"oding\textsuperscript{1}
+
+}
+{
+	\textsuperscript{1} Max Planck Institute for Biophysical Chemistry, 37077 G\"ottingen, Germany\\
+	\textsuperscript{2} German Heart Centre, 80636 Munich, Germany\\[0.5em]
+        {\color{primary} \emph{saikat.banerjee@mpibpc.mpg.de, soeding@mpibpc.mpg.de}}\\[0.5em]
+        {\color{mpibpcmaroon} https://github.com/soedinglab/b-lore}
+}
+%%% Logo right of title %%%
+{
+\begin{tabular}{l l}
+  \includegraphics[height=7em]{Max-Planck-Gesellschaft-no-txt.pdf} & \includegraphics[height=7em]{Print_Plotter_MPI-BPC_kurz-short_CMYK.eps} \\
+\end{tabular}
+        
+}
+{
+	%\includegraphics[height=5em]{Print_Plotter_MPI-BPC_kurz-short_CMYK.eps}
+	
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%% CONTENT BOXES %%%
+%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%
+%%% MOTIVATION %%%
+%%%%%%%%%%%%%%%%%%%%%
+\headerbox{1 Motivation}{name=motivation, column=0, row=0, span=4}{
+  {\begin{tikzpicture}
+     \fill[fill = highlight!20] (0, 0) -- (7.5, 0) -- (8.5, 2.6) -- (7.5, 5.2) -- (0, 5.2) -- cycle;
+     \node (simplereg) at (3.75, 2.6) [rectangle, align=justify, text width = 7cm, inner sep = 1em]
+           {Genetic variants in genome-wide association studies (GWAS) are tested for disease association mostly using simple regression, one variant at a time.
+            In post-GWAS analyses, such as finemapping, \textbf{\textsc{multiple regression}} use multiple SNPs with Bayesian variable selection,
+            in which a sparsity-enforcing prior on effect sizes is used to avoid overtraining.
+            The effect sizes are integrated out for posterior inference.};
+            %For binary traits, the multiple \emph{logistic} regression has not yielded clear improvements over the linear model.};
+     \fill[fill = mpibpcmaroon] (7.7, 0)    -- (22.5, 0.0) -- (23.1, 1.6) -- (8.3, 1.6)  -- cycle;
+     \fill[fill = mpibpcblue] (8.35, 1.8) -- (23.15, 1.8) -- (23.5, 2.6) -- (23.15, 3.4) -- (8.35, 3.4) -- (8.7, 2.6) -- cycle;
+     \fill[fill = mpibpcgreen] (8.3, 3.6)  -- (23.1, 3.6) -- (22.5, 5.2) -- (7.7, 5.2)  -- cycle;
+     \node (improve1) at (15.5, 4.4) [rectangle, align=left, text width = 14cm, inner sep = 0em, color = black]
+           {\textbf{\textsc{Multiple logistic regression}} has not yielded clear improvements over the linear model for binary traits in case-control GWAS.};
+     \node (improve2) at (16.0, 2.6) [rectangle, align=left, text width = 14cm, inner sep = 0em, color = white]
+           {\textbf{\textsc{MCMC sampling}} has proved to be costly and technically challenging to perform the integreation.};
+     \node (improve3) at (15.5, 0.8) [rectangle, align=left, text width = 14cm, inner sep = 0em, color = white]
+           {\textbf{\textsc{Linear approximation}} of the logistic function is often used for case-control data.};
+     \fill [fill = important!20, inner sep = 0em] (23.7, 0) -- (29.5, 0) -- (29.5, 5.2) -- (23.7, 5.2) -- cycle;
+     \node (blore) at (26.7, 2.6)%
+           [rectangle, align=justify, text width = 5cm, inner sep = 0em]
+           {\textbf{How to perform multiple logistic regression more accurately and faster?}
+            \\[0.5em] In B-LORE, we introduce the \textbf{quasi-Laplace approximation} to analytically integrate over variant effect sizes. B-LORE improves finemapping with increasing number of controls.};
+   \end{tikzpicture}
+  }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%% METHODS %%%
+%%%%%%%%%%%%%%%%%%%%%
+\headerbox{2 Model and Priors}{name=model, column=0, row=1, span=2, below=motivation}{
+
+  Probability of $n$\tss{th} individual with genotype $\vx_n$ to be diseased:
+  \begin{multicols}{2}
+    {\begin{center}
+      \begin{tikzpicture}
+        \node (a) at (0,0) [mathblock] {
+          \begin{varwidth}{\linewidth}
+          \begin{equation*}
+            p\prth{\phi_n = 1 \mid \vx_n, \vv} = \frac{ \exp\prth{\vv^{\intercal}\vx_n} }{ 1 + \exp\prth{\vv^{\intercal}\vx_n} }
+          \end{equation*}
+          \end{varwidth}
+        };
+      \end{tikzpicture}
+    \end{center}}
+    {\begin{center} 
+      \includegraphics[width=0.4\textwidth]{logistic_function_02.pdf}
+    \end{center}}
+  \end{multicols}
+  {\vspace{-2em}}%\color{primary}\noindent\rule{0.4\linewidth}{0.4pt}}\\[0.5em]
+  Prior on effect sizes given hyperparameters $\pi$ and $\sigma$,
+  {\vspace{-1em}}%\color{primary}\noindent\rule{0.4\linewidth}{0.4pt}}\\[0.5em]
+  \begin{multicols}{2}
+    {$\!
+    \begin{aligned}
+      & p\prth{v_i \mid \pi, \sigma} \nonumber\\ &=  
+                                    {\color{secondary}\overbrace{\pi\,\N\prth{v_i \mid 0, \sigma^2}}^{\text{Causal}}} +
+                                    {\color{primary}\overbrace{\prth{1 - \pi} \delta_0}^{\text{Non-causal}}} \nonumber \\[0.75em]
+                                 &= \sum_{z_i = 0, 1} {\color{secondary} \pi^{z_i}} {\color{primary}\prth{1 - \pi}^{\prth{1 - z_i}}} 
+                                    \N\prth{ v_i \mid \bf 0, \diag(\bs\sigma^2_{\vz, i}) } \nonumber \\
+                                 &= \sum_{z_i = 0, 1} p\prth{ \vz \mid \pi } \N\prth{ v_i \mid \bf 0, \diag(\bs\sigma^2_{\vz, i}) } \nonumber \\
+      \label{eq:effectsize-prior}
+    \end{aligned}
+    $\\[-0.5em]
+    where, $\sigma^2_{\vz,i} = z_i \sigma^2 $ \\[0.5em]
+    $z_i \in \{0, 1\} \Rightarrow$ Indicator variable of causality \\[0.5em]
+    }%
+    {\begin{center}
+      \includegraphics[width=0.43\textwidth]{bayesian_logistic_regression_01.pdf} \\
+      \begin{tikzpicture}
+        \node (a) at (0,0) [infoblock] {
+            \begin{varwidth}{\linewidth}
+            \begin{itemize}[leftmargin=1.2em, label={\color{primary}\tiny\DiamondSolid}]
+              \setlength\itemsep{0.1em}
+              \item $z_i = 1$ \qquad SNP $i$ is causal
+              \item $z_i = 0$ \qquad SNP $i$ is non-causal
+            \end{itemize}
+            \end{varwidth}
+        };
+      \end{tikzpicture}
+    \end{center}}
+  \end{multicols}
+}
+
+\headerbox{3 Optimization}{name=optim, column=2, span=2, below=motivation, bottomaligned=model}{
+
+  \emph{Evidence approximation}: maximizing the marginal likelihood\\[-0.5em]
+  \begin{equation*}
+    \mathrm{m}\mathcal{L}(\pi, \sigma) := p \prth{ \bs\phi \mid \vx, \pi, \sigma }
+                    = \sum_{\vz} {\color{sub1} p\prth{ \vz \mid \pi }}
+                      \int {\color{sub2} p \prth{ \bs\phi \mid \vx, \vv }}\,
+                           {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} d\vv \rightarrow \max
+  \end{equation*}
+
+  \vspace{0.75em}
+  {\textbf{Quasi-Laplace approximation}:}
+  \begin{equation*}
+    {\color{sub2} p\prth{ \bs\phi \mid \vx, \vv }}\, {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} =
+       {\color{black} \underbrace{ {\color{sub2} p\prth{ \bs\phi \mid \vx, \vv }}\, {\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }} }_{
+                       \displaystyle \propto \mathcal{N} \prth{ \mathbf{v} \mid \tilde{\vv}, \tilde{\bs\Lambda}^{-1} }}
+       }
+      \frac{{\color{sub1}\mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }}}{\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }}
+  \end{equation*}
+
+  \vspace{0.75em}
+  {\textbf{Benefits}:}
+  \begin{itemize}
+    \item The regularizer pulls the maximum of the regularized likelihood near to the mode of the integral, making it more accurate than Laplace approximation.
+    \item Can be extended to multiple studies.
+    \item Fast gradient-descent optimization.
+  \end{itemize}
+  {\begin{center}
+    \begin{tikzpicture}
+      \fill[fill = highlight!20] (0, 0) -- (2.5, 0) -- (3, 0.9) -- (2.5, 1.8) -- (0, 1.8) -- cycle;
+      \fill[fill = mpibpcmaroon] (2.7, 0) -- (14, 0) -- (14, 0.8) -- (3.15, 0.8) -- cycle;
+      \fill[fill = mpibpcblue]   (3.15, 1) -- (14, 1) -- (14, 1.8) -- (2.7, 1.8) -- cycle;
+      %\fill[fill = mpibpcmaroon!80] (5, 0) -- (14, 0) -- (14, 0.8) -- (5, 0.8) -- cycle;
+      %\fill[fill = mpibpcblue!80]   (5, 1) -- (14, 1) -- (14, 1.8) -- (5, 1.8) -- cycle;
+      \node at (1.25, 0.9) [rectangle, align=center, text width = 2cm, inner sep = 0em, color=black] {\textbf{B-LORE} schema};
+      \node at (8.5, 1.4) [rectangle, align=center, inner sep = 0em, color=white]
+                          {1. Two-step optimization at each cohort to estimate $\tilde{\sigma}$ and ($\tilde{\vv}, \tilde{\bs\Lambda}$).};
+      \node at (8.5, 0.4) [rectangle, align=justify, inner sep = 0em, color=white]
+                          {2. Estimation of hyperparameters ($\pi$, $\sigma$).%
+%                              by optimizing the marginal likelihood using $\tilde{\sigma}$, $\tilde{\vv}$ and $\tilde{\bs\Lambda}$ of each study.
+                          };
+    \end{tikzpicture}
+  \end{center}}
+}
+
+\headerbox{4 Inference}{name=infer, column=3, span=1, below=optim}{
+  {\color{primary}\emph{Prediction of causality of each locus}.}\\[0.5em]
+  The probability for a locus to be causally associated with the disease is%= 1 -- probability of {\scshape not} containing a single causal SNP.
+  {\begin{center} \vskip-0.25em
+    \begin{tikzpicture}
+      \node (a) at (0,0) [highlightnosep] {
+          \begin{varwidth}{\linewidth}
+            \begin{align*}
+              \prob_{\mathrm{causal}} &= p\prth{\text{locus is causal} \mid \bs\phi, \vX, \hat\pi, \hat\sigma} \\
+                                      &= 1 - p\prth{\vz = 0 \mid \bs\phi, \vX, \hat\pi, \hat\sigma}
+            \end{align*}
+          \end{varwidth}
+      };
+    \end{tikzpicture}
+  \end{center}}
+
+  {\color{primary}\emph{Statistical finemapping of causal variants}.}\\[0.5em]
+  The posterior probability for SNP $i$ to be causal is 
+  {\begin{center} \vskip-0.5em
+    \begin{tikzpicture}
+      \node (a) at (0,0) [highlight] {
+          \begin{varwidth}{\linewidth}
+            \begin{equation*}
+              p\prth{z_i = 1 \mid \bs\phi, \vX, \hat\pi, \hat\sigma}
+            \end{equation*}
+          \end{varwidth}
+      };
+    \end{tikzpicture}
+  \end{center}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% GERMIFS CAD %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{5 Application on Coronary Artery Disease}{name=realcad, column=0, span=3, below=model}{
+\newdimen\myfigheight
+\setlength{\myfigheight}{8cm}
+
+  \begin{center}
+    \includegraphics[height=\myfigheight, keepaspectratio]{loci_classification.pdf}
+    \includegraphics[height=\myfigheight, keepaspectratio]{Locus_018.pdf}
+    \includegraphics[height=\myfigheight, keepaspectratio]{Locus_013.pdf}
+  \end{center}
+Meta-analysis of 5 cohorts (Germal Myocardial Infarction Family Study, GerMIFS I-V) with a total of 6234 cases and 6848 controls from white European ancestry. 
+We pre-selected the top 50 loci with SNPTEST / META, and applied B-LORE.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%e
+%%%% SIMULATION RESULTS %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{6 Meta-analysis with real genotype and simulated phenotype }{name=simures, column=0, span=3, below=realcad}{
+
+  {We simulated 13082 phenotypes for 5 cohorts usings 100 loci of $\sim$200 SNPs, using one or more causal SNPs in each locus.}
+
+\begin{multicols}{4}
+  {\begin{center}
+   25 loci \\
+   \includegraphics[width=0.23\textwidth]{pip_prc_normal_h06_c2_l100_100pheno_25summary_25loci_cred.pdf}
+   \end{center}
+  }
+  {\begin{center}
+   100 loci \\
+   \includegraphics[width=0.23\textwidth]{pip_prc_normal_h06_c2_l100_cred.pdf}
+   \end{center}
+  }
+  {\begin{center}
+   Case/Control = 1.0 \\
+   \includegraphics[width=0.23\textwidth]{pip_prc_normal_h04_c2_l100_cred.pdf}
+   \end{center}
+  }
+  {\begin{center}
+   Case/Control = 0.25 \\
+   \includegraphics[width=0.23\textwidth]{pip_prc_normal_h04_c2_l025_cred.pdf}
+   \end{center}
+  }
+\end{multicols}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% REFERENCES %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{7 References}{name=biblio, column=3, span=1, below=realcad, below=infer}{
+ {\raggedright
+  \footnotesize
+ \begin{enumerate}[leftmargin=1.5em]
+   \item Banerjee \etal bioRxiv 2017, doi:10.1101/198911
+   \item Servin \etal PLOS Genet 2007, doi:10.1371/ journal.pgen.0030114
+   \item Guan \etal Ann Appl Stat 2011, doi:10.1214/ 11-AOAS455
+   \item CARDIoGRAMplusC4D Nat Genet 2015, doi:10.1038/ng.3396
+ \end{enumerate}
+ }
+}
+
+\headerbox{8 Acknowledgement}{name=thanks, column=3, span=1, below=biblio}{
+
+  \footnotesize
+  We thank Prof. Dr. Jeanette Erdmann and all members of the S\"oding lab for helpful suggestions and discussions.
+  This work was supported by the German Federal Ministry of Education and Research (BMBF) within the framework of
+  the e:Med research and funding concept (grant 01ZX1313A-2014).
+
+  \begin{minipage}{\textwidth}
+    \centering
+    \raisebox{-0.5\height}{\includegraphics[height=75px]{BMBF.eps}}
+    %\hspace*{.2in}
+    \raisebox{-0.5\height}{\includegraphics[height=37px]{emed_logo.png}}
+  \end{minipage}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% ACKNOWLEDGEMETS %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\headerbox{5 Case Study: Helix-Helix Contacts in  YidC }{name=yidc, column=1, row=1, span=1, below=cc}{
+%	
+%	
+%	\begin{multicols}{2}	
+%	
+%	\includegraphics[height=150px]{YidC_couplingmatrix}
+%	Statistical residue-residue coupling analysis was applied to the bacterial transmembrane protein YidC. 
+%	We then computed probabilities for each possible helix-helix contact by aggregating the evidence of stronger coupling coefficients over the expected interaction patterns. 
+%	A structural model built from this co-evolutionary analysis was found to be consistent with recently published crystal structures of YidC (Kumazaki et al, Nature 2014). 
+%	\end{multicols}
+%	
+%	\vspace{-1.5em}
+%	\centering
+%	\includegraphics[height=115px]{YidC_model}
+%	
+%}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% 6 Predicting Distance Maps %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\headerbox{6 Predicting Inter-residue Distances}{name=distancemaps, column=1, row=2, span=1, below=yidc,above=bottom}{
+%	
+%The definition of residue contacts is based on a rigid distance threshold, e.g. $C_{\beta}$-8\si{\angstrom}. Since residue interactions span much broader distance ranges, it is biologically meaningful to extend the concept of binary contacts. Using statistical modeling we aim at predicting inter-residue distances. The resulting increased information content of distance maps has already been shown to boost precision of predicted structural models (Kukic et al.,(2014)).
+%
+%	\includegraphics[height=125px]{residue_distance_profile}
+%	\includegraphics[height=125px]{distance_map}
+%	
+%%	\includegraphics[height=110px]{residue_distance_structure}
+%
+%}
+%
+
+\end{poster}
+\end{document}
