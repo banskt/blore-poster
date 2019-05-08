@@ -5,7 +5,6 @@
 % --------------------------------------------------------------------------- 
 \documentclass[a0paper,portrait,debug]{baposter}
 
-
 \usepackage{relsize}	% For \smaller
 \usepackage{url}	% For \url
 \usepackage{epstopdf}	% EPS files automatically to PDF to for pdflatex
@@ -130,7 +129,7 @@
 	grid=false,
 	columns=4,
 	colspacing=1em,				% 1em is size of 'M' letter
-	headerheight=17em, 				% header of poster
+	headerheight=19em, 				% header of poster
 	eyecatcher=false,
 	%
 	% shades
@@ -159,11 +158,11 @@
 }
 {
 	%\includegraphics[width=6em]{logo_LMU} 
-
+        \includegraphics[width=10em]{blore.png}
 }
 %%% Title %%%
 {
-	{\color{primary}B-LORE}
+	{\color{primary}Bayesian multiple LOgistic REgression}
 }
 %%% Sub-title
 {
@@ -172,13 +171,13 @@
 }
 %%% Authors %%
 {		
-	\underline{Saikat Banerjee}\textsuperscript{1}, Lingyao Zeng\textsuperscript{2}, Heribert Schunkert\textsuperscript{2} and Johannes S\"oding\textsuperscript{1}
+	Saikat Banerjee\textsuperscript{1}, Lingyao Zeng\textsuperscript{2}, Heribert Schunkert\textsuperscript{2} and Johannes S\"oding\textsuperscript{* 1}
 
 }
 {
 	\textsuperscript{1} Max Planck Institute for Biophysical Chemistry, 37077 G\"ottingen, Germany\\
 	\textsuperscript{2} German Heart Centre, 80636 Munich, Germany\\[0.5em]
-        {\color{primary} \emph{saikat.banerjee@mpibpc.mpg.de}}\\[0.5em]
+        {\color{primary} \textsuperscript{*}\emph{soeding@mpibpc.mpg.de}}\\[0.5em]
         {\color{mpibpcmaroon} https://github.com/soedinglab/b-lore}
 }
 %%% Logo right of title %%%

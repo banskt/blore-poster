@@ -1072,7 +1072,11 @@
       \draw (image.east) node(title)[anchor=west]  {%
         {%
           \begin{minipage}{\baposter@titleimage@textwidth}%
-            {\rmfamily\bfseries\Huge #3}\\[0.75em]%
+            {\setlength{\tabcolsep}{-0.1em}
+              \begin{tabular}{ll} 
+                \raisebox{-.2\height}{#2} & {\rmfamily\bfseries\Huge #3} \\
+              \end{tabular}
+            }\\[0.75em]%
             {\rmfamily\itshape\huge #4}\\[1em]%
             {\Large #5}\vskip0.75em%\\[0.75em]%
             {\large #6}
