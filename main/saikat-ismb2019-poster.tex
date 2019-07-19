@@ -43,7 +43,6 @@
 
 \usepackage{dsfont}
 \usepackage{fontawesome}
-\usepackage{academicons}
 
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
@@ -231,64 +230,18 @@
 
   % Itemize on the right
   %Multiple logistic regression should work much better in the non-linear regimes.\\
-  {\textbf{Challenges for using multiple logistic regression}:}
+  \textbf{Challenges for using multiple logistic regression}:
   \begin{itemize}
+    \setlength\itemsep{0.1em}
     \item The integration for the maximum likelihood cannot be solved analytically.
     \item MCMC sampling is computationally intractable.
     \item Solutions using Laplace and linear approximations essentially makes it a linear model.
     \item Metaanalysis requires knowledge of LD structure of the population.
     \item Limited to application on each individual genome-wide significant locus
-  \end{itemize} 
-  \,\\[0.5em]
+  \end{itemize}
+  %\leavevmode\\ 
+  %\,\\[0.5em]
 \end{multicols}
-
-%\begin{tabular}{ccl}
-%  { \specialcell{\includegraphics[height=15em]{Locus_013_ldexample.pdf} \\ Linkage disequilibrium \faFrownO} &
-%  { \specialcell{\includegraphics[height=15em]{linear_model.pdf} \\ Linear model \faFrownO} &
-%  \includegraphics[width=10em]{linear_model.pdf}
-%\end{tabular}
-
-
-%\begin{tabular}{lll}
-%  {\begin{center}
-%    \includegraphics[width=0.2\textwidth]{Locus_013_ldexample.pdf} \\
-%    Linkage disequilibrium \faFrownO \\
-%  \end{center}
-%  } &
-%  {\begin{center}
-%    \includegraphics[width=0.3\textwidth]{linear_model.pdf}
-%    Linear model \faFrownO \\
-%  \end{center}
-%  } &
-%  {%{\large Challenges of multiple logistic regression:}
-%    %\begin{itemize}
-%    %  \item MCMC sampling is computationally intractable.
-%    %  \item Laplace and linear approximations essentially makes it linear.
-%    %\end{itemize}
-%  } \\
-%\end{tabular}
-
-%\begin{multicols}{4}
-%  {\begin{center}
-%   \includegraphics[width=0.2\textwidth]{Locus_013_ldexample.pdf} \\
-%   Linkage disequilibrium \faFrownO \\
-%   \end{center}
-%  }
-%  {\begin{center}
-%   \includegraphics[width=0.3\textwidth]{linear_model.pdf}
-%   Linear model \faFrownO \\
-%   \end{center}
-%  }
-%  {\begin{center}
-%   Multiple logistic regression 
-%   \end{center}
-%  }
-%  {\begin{center}
-%   How to solve the integral?
-%   \end{center}
-%  }
-%\end{multicols}
-
 
   %{\begin{tikzpicture}
   %   \fill[fill = highlight!20] (0, 0) -- (7.5, 0) -- (8.5, 2.6) -- (7.5, 5.2) -- (0, 5.2) -- cycle;
