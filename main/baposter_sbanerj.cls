@@ -148,13 +148,12 @@
 \typeout{Use Packages}
 \RequirePackage{xkeyval}
 \RequirePackage{calc}
-\RequirePackage[cmyk]{xcolor}
+%\RequirePackage[cmyk]{xcolor}
+\RequirePackage{color}
 \RequirePackage{tikz}
 \RequirePackage{pgf}
 \RequirePackage{ifthen}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{adjustbox}
-\RequirePackage{setspace}
 %\RequirePackage[l2tabu, orthodox]{nag}
 \usetikzlibrary{decorations}
 \usetikzlibrary{fadings}
@@ -168,6 +167,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Choose a smaller value for larger fonts
+%\newcommand{\baposter@fontscale}{0.292}
 \newcommand{\baposter@fontscale}{0.37}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -503,8 +503,7 @@
   textborder=faded,
   boxpadding=0.5em,
   % header
-  %headerfont=\scshape\Large,% or 
-  headerfont=\color{white}\textsf\textbf
+  headerfont=\scshape\Large,% or headerfont=\color{white}\textsf\textbf
   headerFontColor=black,
   headerColorOne=red,
   headerColorTwo=brown,
@@ -765,7 +764,7 @@
 %%%   - headershape=rectangle,rounded,roundedleft,roundedright
 %%%                       Shape of the box-header region
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{poster}[7]{%
+\newenvironment{poster}[8]{%
   \thispagestyle{empty}% Suppress Page Number
   \debug{Poster Starts}%
   % This setkeys call parses all provided options and depending on the option
@@ -1039,8 +1038,14 @@
       (0pt,\colheight) coordinate(north west) (\textwidth,\colheight) coordinate(north east)%
       (0pt,0pt) coordinate(south west)        (\textwidth,0pt) coordinate(south east);%
 %
-    \setbox\baposter@titleimage@left=\hbox{}%
+    \ifbaposter@eyecatcher% Has eye catcher
+      \debug{Eyecatcher found!}
+      \setbox\baposter@titleimage@left=\hbox{#2}%
+    \else% Has no eye catcher%
+      \setbox\baposter@titleimage@left=\hbox{}%
+    \fi%
     \setlength{\baposter@titleimage@left@width}{\wd\baposter@titleimage@left}%
+    %\setbox\baposter@titleimage@right=\hbox{#7}%
     \setbox\baposter@titleimage@right=\hbox{#7}%
     \setlength{\baposter@titleimage@right@width}{\wd\baposter@titleimage@right}%
     \setlength{\baposter@titleimage@textwidth}{\textwidth}%
@@ -1052,30 +1057,32 @@
     %
     %      % Draw Header%
     \draw (north west) +(0em,1em+0.5\headerheight) node(image)[anchor=west]   { {\usebox{\baposter@titleimage@left }} };%
-    \draw (north east) +(0em,1em+0.3\headerheight) node(logo) [anchor=east]   { {\usebox{\baposter@titleimage@right}} };%
+    \draw (north east) +(0em,1em+0.5\headerheight) node(logo) [anchor=east]   { {\usebox{\baposter@titleimage@right}} };%
     %
     \ifbaposter@eyecatcher% Has eye catcher%
-      \debug{Eyecatcher found!}
       \draw (image.east) node(title)[anchor=west,text width=\baposter@titleimage@textwidth]{%
         \begin{minipage}{\baposter@titleimage@textwidth}%
-          %% Title
-          {\setlength{\tabcolsep}{0em}
-           \colorbox{white}{
-             \begin{tabular}{p{9em} p{70em}}
-               %\raisebox{\dimexpr-.5\height+.5\ht\strutbox\relax}{#2} 
-               \adjustbox{valign=b}{#2}
-               & \raisebox{-0.5em}{\adjustbox{valign=b, minipage=75em}{\rmfamily\bfseries\Huge {\setstretch{1.0} #3 \par}}} \\
-             \end{tabular}
-           }
-          }\\[1em]%
-          %% Authors
-          {\Large #5}\\[0.75em]
-          %% Affiliations, etc.
-          {\large #6}
+          \begin{center}%
+          \textbf{\Huge #3}\\[0.75em]%
+          {\Huge #4}%
+          \end{center}%
         \end{minipage}
       };%
     \else% Has no eye catcher
-      \draw (image.east) node(title)[anchor=west]  { {\begin{minipage}{\baposter@titleimage@textwidth}{\bfseries\Huge #3}\\{\Large #4}\end{minipage}} };%
+      \draw (image.east) node(title)[anchor=west]  {%
+        {%
+          \begin{minipage}{\baposter@titleimage@textwidth}%
+            {\setlength{\tabcolsep}{-0.1em}
+              \begin{tabular}{ll} 
+                \raisebox{-.2\height}{#2} & {\rmfamily\bfseries\Huge #3} \\
+              \end{tabular}
+            }\\[0.75em]%
+            {\rmfamily\itshape\huge #4}\\[1em]%
+            {\Large #5}\vskip0.75em%\\[0.75em]%
+            {\large #6}
+          \end{minipage}
+        }% 
+      };%
     \fi
   }% END poster begin
 % The body
