@@ -190,7 +190,7 @@
 %%%% Logo on the left
 {\includegraphics[height=7em]{blore_logo_color_300ppi.png}} % First university/lab logo on the left
 %%%% Title
-{\color{primary}Bayesian multiple logistic regression improves loci prioritization and finemapping in case-control GWAS}
+{\color{primary}Bayesian multiple logistic regression improves\\loci prioritization and finemapping in case-control GWAS}
 %%%% Subtitle
 {Introducing the quasi-Laplace approximation}
 %%%% Authors
@@ -230,15 +230,16 @@
   } \\
 
   % Itemize on the right
-  Multiple logistic regression should work much better in the non-linear regimes.\\
+  %Multiple logistic regression should work much better in the non-linear regimes.\\
   {\textbf{Challenges for using multiple logistic regression}:}
   \begin{itemize}
     \item The integration for the maximum likelihood cannot be solved analytically.
     \item MCMC sampling is computationally intractable.
     \item Solutions using Laplace and linear approximations essentially makes it a linear model.
-    \item Using multiple loci together for the analysis.
+    \item Metaanalysis requires knowledge of LD structure of the population.
+    \item Limited to application on each individual genome-wide significant locus
   \end{itemize} 
-  \,\\[1.5em]
+  \,\\[0.5em]
 \end{multicols}
 
 %\begin{tabular}{ccl}
