@@ -222,7 +222,7 @@
   \vspace{0.25em}
   {\setlength{\tabcolsep}{0em}
   \begin{tabular}{c p{2em} c}
-    \adjustbox{valign=m}{\includegraphics[height=15em]{Locus_013_ldexample.pdf}} & &
+    \adjustbox{valign=m}{\includegraphics[height=12em]{Locus_013_ldexample.pdf}} & &
     \adjustbox{valign=m}{\includegraphics[height=10em]{linear_model.pdf}} \\[7.0em] 
     {\large Linkage disequilibrium \faFrownO} & & {\large Linear model \faFrownO} \\[0.5em]
   \end{tabular}
@@ -237,9 +237,9 @@
     \item MCMC sampling is computationally intractable.
     \item Solutions using Laplace and linear approximations essentially makes it a linear model.
     \item Metaanalysis requires knowledge of LD structure of the population.
-    \item Limited to application on each individual genome-wide significant locus
+    \item Limited to application on single genome-wide significant locus (cannot prioritize loci).
   \end{itemize}
-  %\leavevmode\\ 
+  \leavevmode\\[0.1em] 
   %\,\\[0.5em]
 \end{multicols}
 
@@ -291,7 +291,7 @@
       \includegraphics[width=0.4\textwidth]{logistic_function.pdf}
     \end{center}}
   \end{multicols}
-  {\vspace{-2em}}%\color{primary}\noindent\rule{0.4\linewidth}{0.4pt}}\\[0.5em]
+  {\vspace{-1em}}%\color{primary}\noindent\rule{0.4\linewidth}{0.4pt}}\\[0.5em]
   Prior on effect sizes given hyperparameters $\pi$ and $\sigma$,
   {\vspace{-1em}}%\color{primary}\noindent\rule{0.4\linewidth}{0.4pt}}\\[0.5em]
   \begin{multicols}{2}
@@ -373,13 +373,13 @@
 \headerbox{4. Inference}{name=infer, column=3, span=1, below=optim}{
   {\color{primary}\emph{Prediction of causality of each locus}.}\\[0.5em]
   The probability for a locus to be causally associated with the disease is%= 1 -- probability of {\scshape not} containing a single causal SNP.
-  {\begin{center} \vskip-1.5em
+  {\begin{center} \vskip-0.4em
     \begin{tikzpicture}
       \node (a) at (0,0) [highlightnosep] {
           \begin{varwidth}{\linewidth}
             \begin{align*}
-              \prob_{\mathrm{causal}} &= p\prth{\text{locus is causal} \mid \bs\phi, \vX, \hat\pi, \hat\sigma} \\
-                                      &= 1 - p\prth{\vz = 0 \mid \bs\phi, \vX, \hat\pi, \hat\sigma}
+              \prob_{\mathrm{causal}} &= p\prth{\text{locus is causal} \mid \vy, \vX, \hat\pi, \hat\sigma} \\
+                                      &= 1 - p\prth{\vz = 0 \mid \vy, \vX, \hat\pi, \hat\sigma}
             \end{align*}
           \end{varwidth}
       };
@@ -393,7 +393,7 @@
       \node (a) at (0,0) [highlight] {
           \begin{varwidth}{\linewidth}
             \begin{equation*}
-              p\prth{z_i = 1 \mid \bs\phi, \vX, \hat\pi, \hat\sigma}
+              p\prth{z_i = 1 \mid \vy, \vX, \hat\pi, \hat\sigma}
             \end{equation*}
           \end{varwidth}
       };
