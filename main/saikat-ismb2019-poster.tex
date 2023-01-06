@@ -16,14 +16,24 @@
 %------------------------------------------
 % Font declaration
 %------------------------------------------
-\usepackage[T1]{fontenc}
-\usepackage{helvet} %to use helvet font
+% \usepackage[T1]{fontenc}
+% \usepackage{helvet} %to use helvet font
+% \usepackage[scaled=1.06,sups]{XCharter}% lining figures in math, osf in text
+% \usepackage[scaled=1.04,varqu,varl]{inconsolata}% inconsolata typewriter
+% \usepackage[charter,vvarbb,scaled=1.1]{newtxmath}
+% \DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n} 
+% \renewcommand{\mathcal}[1]{\pazocal{#1}}
 
-\usepackage[scaled=1.06,sups]{XCharter}% lining figures in math, osf in text
-\usepackage[scaled=1.04,varqu,varl]{inconsolata}% inconsolata typewriter
-\usepackage[charter,vvarbb,scaled=1.1]{newtxmath}
-\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n} 
-\renewcommand{\mathcal}[1]{\pazocal{#1}}
+%---------
+% old fonts
+%---------
+\usepackage{amsmath,amssymb}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\usepackage{helvet} %to use helvet font
+\usepackage{charter}
+%\usepackage[defaultsans]{droidsans}
+%----------
 
 %% % scaled to match Charter font size of mathdesign, which I like best
 %% % [osf] reduces number size in text mode... not sure yet about this one
@@ -63,6 +73,8 @@
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\prob}{Pr}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 \newcommand{\pvalue}{\mbox{$p\,$-value}}
 \newcommand{\pvalues}{\mbox{$p\,$-values}}
 \newcommand{\bs}{\boldsymbol}
@@ -326,49 +338,111 @@
   \end{multicols}
 }
 
-\headerbox{3. We introduce the quasi-Laplace approximation}{name=optim, column=2, span=2, below=motivation, bottomaligned=model}{
+\headerbox{3. Latex equation plate}{name=optim, column=2, span=2, below=motivation, bottomaligned=model}{
+  % Posterior distribution
+  %\begin{equation*}
+  %  p\prth{\vv \mid \vX, \vy} \approx \frac{p\prth{\vy \mid \vX, \vv} p\prth{\vv \mid \hat\pi, \hat\sigma}}{p\prth{\vy \mid \vX, \hat\pi, \hat\sigma}}
+  %\end{equation*}
 
-  \emph{Evidence approximation}: maximizing the marginal likelihood\\[-0.5em]
-  \begin{equation*}
-    \mathrm{m}\mathcal{L}(\pi, \sigma) := p \prth{ \vy \mid \vx, \pi, \sigma }
-                    = \sum_{\vz} {\color{black} p\prth{ \vz \mid \pi }}
-                      \int {\color{sub2} p \prth{ \vy \mid \vx, \vv }}\,
-                           {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} d\vv \rightarrow \max
-  \end{equation*}
+  %\begin{align*}
+  %  \mathcal{L}(\pi, \sigma) \triangleq p \prth{ \vy \mid \vX, \pi, \sigma } 
+  %                  &= \int p\prth{\vy \mid \vX, \vv, \pi, \sigma}\,p\prth{\vv \mid \pi, \sigma} d\vv \\
+  %                  &= \sum_{\vz} {\color{black} p\prth{ \vz \mid \pi }}
+  %                     \int {\color{sub2} p \prth{ \vy \mid \vX, \vv }}\,
+  %                          {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} d\vv
+  %\end{align*}
 
-  \vspace{0.75em}
-  {\textbf{Quasi-Laplace approximation}:}
-  \begin{equation*}
-    {\color{sub2} p\prth{ \vy \mid \vx, \vv }}\, {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} =
-       {\color{black} \underbrace{ {\color{sub2} p\prth{ \vy \mid \vx, \vv }}\, {\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }} }_{
-                       \displaystyle \propto \mathcal{N} \prth{ \vv \mid \tilde{\vv}, \tilde{\bs\Lambda}^{-1} }}
-       }
-      \frac{{\color{sub1}\mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }}}{\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }}
-  \end{equation*}
+  %\begin{equation*}
+  %  \prth{\hat\pi, \hat\sigma} = \argmax_{\pi, \sigma} \mathcal{L}(\pi, \sigma)
+  %\end{equation*}
 
-  {\textbf{Benefits}:}
-  \begin{itemize}
-    \item The regularizer pulls the maximum of the regularized likelihood near to the mode of the integral, making it more accurate than Laplace approximation.
-    \item Can be extended to multiple studies.
-    \item Fast gradient-descent optimization.
-  \end{itemize}
-  {\begin{center}
-    \begin{tikzpicture}
-      \fill[fill = highlight!20] (0, 0) -- (2.5, 0) -- (3, 0.9) -- (2.5, 1.8) -- (0, 1.8) -- cycle;
-      \fill[fill = mpibpcmaroon] (2.7, 0) -- (14, 0) -- (14, 0.8) -- (3.15, 0.8) -- cycle;
-      \fill[fill = mpibpcblue]   (3.15, 1) -- (14, 1) -- (14, 1.8) -- (2.7, 1.8) -- cycle;
-      %\fill[fill = mpibpcmaroon!80] (5, 0) -- (14, 0) -- (14, 0.8) -- (5, 0.8) -- cycle;
-      %\fill[fill = mpibpcblue!80]   (5, 1) -- (14, 1) -- (14, 1.8) -- (5, 1.8) -- cycle;
-      \node at (1.25, 0.9) [rectangle, align=center, text width = 2cm, inner sep = 0em, color=black] {\textbf{B-LORE} schema};
-      \node at (8.5, 1.4) [rectangle, align=center, inner sep = 0em, color=white]
-                          {1. Two-step optimization at each cohort to estimate $\tilde{\sigma}$ and ($\tilde{\vv}, \tilde{\bs\Lambda}$).};
-      \node at (8.5, 0.4) [rectangle, align=justify, inner sep = 0em, color=white]
-                          {2. Estimation of hyperparameters ($\pi$, $\sigma$).%
-%                              by optimizing the marginal likelihood using $\tilde{\sigma}$, $\tilde{\vv}$ and $\tilde{\bs\Lambda}$ of each study.
-                          };
-    \end{tikzpicture}
-  \end{center}}
+  %\begin{equation*}
+  %  p\prth{\vy \mid \vX, \vv} = \prod_{n=1}^{N}\frac{\exp\prth{y_n\,\vv^{\transpose}\vx_n}}{1 + \exp\prth{\vv^{\transpose}\vx_n}}
+  %\end{equation*}
+
+  %\vspace{0.75em}
+  %\begin{equation*}
+  %  {\color{sub2} p\prth{ \vy \mid \vX, \vv }}\, {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} =
+  %     {\color{black} \underbrace{ {\color{sub2} p\prth{ \vy \mid \vX, \vv }}\, {\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }} }_{
+  %                     \displaystyle \propto \mathcal{N} \prth{ \vv \mid \tilde{\vv}, \tilde{\bs\Lambda}^{-1} }}
+  %     }
+  %    \frac{{\color{sub1}\mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }}}{\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }}
+  %\end{equation*}
+
+  % {\begin{center} \vskip-0.5em
+  %   \begin{tikzpicture}
+  %     \node (a) at (0,0) [highlight] {
+  %         \begin{varwidth}{\linewidth}
+  %           \begin{equation*}
+  %             p\prth{z_i = 1 \mid \vy, \vX, \hat\pi, \hat\sigma} = \sum_{\vz: z_i = 1} p\prth{\vz \mid \vy, \vX, \hat\pi, \hat\sigma}
+  %           \end{equation*}
+  %         \end{varwidth}
+  %     };  
+  %   \end{tikzpicture}
+  % \end{center}}
+
+  %\begin{align*}
+  %  \mathcal{L}(\pi, \sigma) &= D' \sum_{\vz} p\prth{ \vz \mid \pi, \sigma } \frac{\exp\prth{\frac{1}{2}\vv_{\vz}^{\transpose} \bs{\Lambda}_{\vz} \vv_{\vz}}}
+  %                                                                                {\abs{\bs\Lambda_{\vz}}^{\frac{1}{2}} \abs{\diag\prth{\bs\sigma_{\vz}^2}}^{\frac{1}{2}}} \\
+  %  \bs{\Lambda}_{\vz} &\triangleq \tilde{\bs\Lambda} + \diag\prth{\frac{1}{\bs\sigma_{\vz}^2}} - \frac{1}{\tilde{\sigma}^2}\identity \\
+  %  \vv_{\vz} &\triangleq \bs{\Lambda}_{\vz}^{-1} \tilde{\bs\Lambda} \tilde{\vv}
+  %\end{align*}
+
+  %\begin{align*}
+  %  \tilde{\sigma} &\leftarrow \argmax_{\sigma}\, \mathcal{L}(\pi = 1, \sigma) \\
+  %  \tilde{\vv} &\leftarrow \argmax_{\vv} \prth{\log p\prth{ \vy \mid \vX, \vv } + \log \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity } } \\
+  %  \tilde{\bs\Lambda} &= \sum_{n = 1}^{N} \tilde{p}_n \prth{1 - \tilde{p}_n} \vx_n \vx_n^{\transpose} + \diag\prth{\frac{1}{\tilde{\sigma}^2}}\,, \quad \tilde{p}_n = p\prth{y_n = 1 \mid \vx_n, \tilde{\vv}}
+  %\end{align*}
+
+  %\begin{equation*}
+  %  \prth{\tilde{\sigma}, \tilde{\vv}, \tilde{\bs\Lambda}}
+  %\end{equation*}
+
 }
+
+%%\headerbox{3. We introduce the quasi-Laplace approximation}{name=optim, column=2, span=2, below=motivation, bottomaligned=model}{
+%%
+%%  \emph{Evidence approximation}: maximizing the marginal likelihood\\[-0.5em]
+%%  \begin{equation*}
+%%    \mathrm{m}\mathcal{L}(\pi, \sigma) := p \prth{ \vy \mid \vx, \pi, \sigma }
+%%                    = \sum_{\vz} {\color{black} p\prth{ \vz \mid \pi }}
+%%                      \int {\color{sub2} p \prth{ \vy \mid \vx, \vv }}\,
+%%                           {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} d\vv \rightarrow \max
+%%  \end{equation*}
+%%
+%%  \vspace{0.75em}
+%%  {\textbf{Quasi-Laplace approximation}:}
+%%  \begin{equation*}
+%%    {\color{sub2} p\prth{ \vy \mid \vx, \vv }}\, {\color{sub1} \mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }} =
+%%       {\color{black} \underbrace{ {\color{sub2} p\prth{ \vy \mid \vx, \vv }}\, {\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }} }_{
+%%                       \displaystyle \propto \mathcal{N} \prth{ \vv \mid \tilde{\vv}, \tilde{\bs\Lambda}^{-1} }}
+%%       }
+%%      \frac{{\color{sub1}\mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }}}{\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }}
+%%  \end{equation*}
+%%
+%%  {\textbf{Benefits}:}
+%%  \begin{itemize}
+%%    \item The regularizer pulls the maximum of the regularized likelihood near to the mode of the integral, making it more accurate than Laplace approximation.
+%%    \item Can be extended to multiple studies.
+%%    \item Fast gradient-descent optimization.
+%%  \end{itemize}
+%%  {\begin{center}
+%%    \begin{tikzpicture}
+%%      \fill[fill = highlight!20] (0, 0) -- (2.5, 0) -- (3, 0.9) -- (2.5, 1.8) -- (0, 1.8) -- cycle;
+%%      \fill[fill = mpibpcmaroon] (2.7, 0) -- (14, 0) -- (14, 0.8) -- (3.15, 0.8) -- cycle;
+%%      \fill[fill = mpibpcblue]   (3.15, 1) -- (14, 1) -- (14, 1.8) -- (2.7, 1.8) -- cycle;
+%%      %\fill[fill = mpibpcmaroon!80] (5, 0) -- (14, 0) -- (14, 0.8) -- (5, 0.8) -- cycle;
+%%      %\fill[fill = mpibpcblue!80]   (5, 1) -- (14, 1) -- (14, 1.8) -- (5, 1.8) -- cycle;
+%%      \node at (1.25, 0.9) [rectangle, align=center, text width = 2cm, inner sep = 0em, color=black] {\textbf{B-LORE} schema};
+%%      \node at (8.5, 1.4) [rectangle, align=center, inner sep = 0em, color=white]
+%%                          {1. Two-step optimization at each cohort to estimate $\tilde{\sigma}$ and ($\tilde{\vv}, \tilde{\bs\Lambda}$).};
+%%      \node at (8.5, 0.4) [rectangle, align=justify, inner sep = 0em, color=white]
+%%                          {2. Estimation of hyperparameters ($\pi$, $\sigma$).%
+%%%                              by optimizing the marginal likelihood using $\tilde{\sigma}$, $\tilde{\vv}$ and $\tilde{\bs\Lambda}$ of each study.
+%%                          };
+%%    \end{tikzpicture}
+%%  \end{center}}
+%%}
 
 \headerbox{4. Inference}{name=infer, column=3, span=1, below=optim}{
   {\color{primary}\emph{Prediction of causality of each locus}.}\\[0.5em]
