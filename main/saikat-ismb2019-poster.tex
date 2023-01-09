@@ -81,6 +81,7 @@
 \newcommand{\vx}{\mathbf{x}}
 \newcommand{\vy}{\mathbf{y}}
 \newcommand{\vz}{\mathbf{z}}
+\newcommand{\vvv}{\mathbf{v}}
 \newcommand{\vv}{\bs{\beta}}
 \newcommand{\vX}{\mathbf{X}}
 \newcommand{\vY}{\mathbf{Y}}
@@ -90,6 +91,7 @@
 \newcommand{\N}{\mathcal{N}}
 \newcommand{\identity}{\mathds{I}}
 \newcommand{\transpose}{{\mkern-1mu\mathsf{T}}}
+\newcommand{\expect}{\mathbb{E}}
 
 
 \newcommand{\eg}{{\it e.g.\ }}
@@ -100,6 +102,7 @@
 \newcommand{\prth}[1]{\left( #1 \right)}
 \newcommand{\brcs}[1]{\left\{ #1 \right\}}
 \newcommand{\sqbr}[1]{\left[ #1 \right]}
+\newcommand{\norm}[1]{ {\left\lVert #1 \right\rVert} }
 \newcommand{\equn}{Eq}
 \newcommand{\fign}{Fig}
 \newcommand{\secn}{Sec.}
@@ -339,9 +342,27 @@
 }
 
 \headerbox{3. Latex equation plate}{name=optim, column=2, span=2, below=motivation, bottomaligned=model}{
+
+  % High dimensional regression
+  %\begin{align*}
+  %  \vy &\in \mathbb{R}^{N} \\
+  %  \vX &\in \mathbb{R}^{N \times P} \\
+  %  \vv &\in \mathbb{R}^P
+  %\end{align*}
+
+  %\begin{align*}
+  %  \vy &= \vx_i\beta_i + \bs\epsilon \\
+  %  \vy &= \sum_i \vx_i\beta_i + \bs\epsilon \\
+  %  \vy &= f\prth{\vX \vv}
+  %\end{align*}
+
+  %\begin{equation*}
+  %  P \gg N
+  %\end{equation*}
+
   % Posterior distribution
   %\begin{equation*}
-  %  p\prth{\vv \mid \vX, \vy} \approx \frac{p\prth{\vy \mid \vX, \vv} p\prth{\vv \mid \hat\pi, \hat\sigma}}{p\prth{\vy \mid \vX, \hat\pi, \hat\sigma}}
+  %  p_{\mathrm{post}}\prth{\vv \mid \vX, \vy} \approx \frac{p\prth{\vy \mid \vX, \vv} p\prth{\vv \mid \hat\pi, \hat\sigma}}{p\prth{\vy \mid \vX, \hat\pi, \hat\sigma}}
   %\end{equation*}
 
   %\begin{align*}
@@ -369,34 +390,111 @@
   %    \frac{{\color{sub1}\mathcal{N}\prth{ \vv \mid \bf 0, \diag\prth{\bs\sigma^2_\vz} }}}{\color{black} \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity }}
   %\end{equation*}
 
-  % {\begin{center} \vskip-0.5em
-  %   \begin{tikzpicture}
-  %     \node (a) at (0,0) [highlight] {
-  %         \begin{varwidth}{\linewidth}
-  %           \begin{equation*}
-  %             p\prth{z_i = 1 \mid \vy, \vX, \hat\pi, \hat\sigma} = \sum_{\vz: z_i = 1} p\prth{\vz \mid \vy, \vX, \hat\pi, \hat\sigma}
-  %           \end{equation*}
-  %         \end{varwidth}
-  %     };  
-  %   \end{tikzpicture}
-  % \end{center}}
+  \begin{equation*}
+    \prth{\tilde{\sigma}, \tilde{\vv}, \tilde{\bs\Lambda}}
+  \end{equation*}
 
+   {\begin{center} \vskip-0.5em
+     \begin{tikzpicture}
+       \node (a) at (0,0) [highlight] {
+           \begin{varwidth}{\linewidth}
+             \begin{equation*}
+               p\prth{z_i = 1 \mid \vy, \vX, \hat\pi, \hat\sigma} = \sum_{\vz: z_i = 1} p\prth{\vz \mid \vy, \vX, \hat\pi, \hat\sigma}
+             \end{equation*}
+           \end{varwidth}
+       };  
+     \end{tikzpicture}
+   \end{center}}
+
+  \begin{align*}
+    \mathcal{L}(\pi, \sigma) &= D' \sum_{\vz} p\prth{ \vz \mid \pi, \sigma } \frac{\exp\prth{\frac{1}{2}\vv_{\vz}^{\transpose} \bs{\Lambda}_{\vz} \vv_{\vz}}}
+                                                                                  {\abs{\bs\Lambda_{\vz}}^{\frac{1}{2}} \abs{\diag\prth{\bs\sigma_{\vz}^2}}^{\frac{1}{2}}} \\
+    \bs{\Lambda}_{\vz} &\triangleq \tilde{\bs\Lambda} + \diag\prth{\frac{1}{\bs\sigma_{\vz}^2}} - \frac{1}{\tilde{\sigma}^2}\identity \\
+    \vv_{\vz} &\triangleq \bs{\Lambda}_{\vz}^{-1} \tilde{\bs\Lambda} \tilde{\vv}
+  \end{align*}
+
+  \begin{align*}
+    \tilde{\sigma} &\leftarrow \argmax_{\sigma}\, \mathcal{L}(\pi = 1, \sigma) \\
+    \tilde{\vv} &\leftarrow \argmax_{\vv} \prth{\log p\prth{ \vy \mid \vX, \vv } + \log \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity } } \\
+    \tilde{\bs\Lambda} &= \sum_{n = 1}^{N} \tilde{p}_n \prth{1 - \tilde{p}_n} \vx_n \vx_n^{\transpose} + \diag\prth{\frac{1}{\tilde{\sigma}^2}}\,, \quad \tilde{p}_n = p\prth{y_n = 1 \mid \vx_n, \tilde{\vv}}
+  \end{align*}
+
+  %% GradVI
   %\begin{align*}
-  %  \mathcal{L}(\pi, \sigma) &= D' \sum_{\vz} p\prth{ \vz \mid \pi, \sigma } \frac{\exp\prth{\frac{1}{2}\vv_{\vz}^{\transpose} \bs{\Lambda}_{\vz} \vv_{\vz}}}
-  %                                                                                {\abs{\bs\Lambda_{\vz}}^{\frac{1}{2}} \abs{\diag\prth{\bs\sigma_{\vz}^2}}^{\frac{1}{2}}} \\
-  %  \bs{\Lambda}_{\vz} &\triangleq \tilde{\bs\Lambda} + \diag\prth{\frac{1}{\bs\sigma_{\vz}^2}} - \frac{1}{\tilde{\sigma}^2}\identity \\
-  %  \vv_{\vz} &\triangleq \bs{\Lambda}_{\vz}^{-1} \tilde{\bs\Lambda} \tilde{\vv}
+  %  p\prth{\vy \mid \vX, \vv, s^2} &= \mathcal{N}\prth{\vy \mid \vX\vv, s^2\identity} \\
+  %  p\prth{\vv} &= \prod_{j=1}^{P}g\prth{b_j}
   %\end{align*}
 
   %\begin{align*}
-  %  \tilde{\sigma} &\leftarrow \argmax_{\sigma}\, \mathcal{L}(\pi = 1, \sigma) \\
-  %  \tilde{\vv} &\leftarrow \argmax_{\vv} \prth{\log p\prth{ \vy \mid \vX, \vv } + \log \mathcal{N}\prth{\vv \mid \bf 0,\: \tilde{\sigma}^2\identity } } \\
-  %  \tilde{\bs\Lambda} &= \sum_{n = 1}^{N} \tilde{p}_n \prth{1 - \tilde{p}_n} \vx_n \vx_n^{\transpose} + \diag\prth{\frac{1}{\tilde{\sigma}^2}}\,, \quad \tilde{p}_n = p\prth{y_n = 1 \mid \vx_n, \tilde{\vv}}
+  %  \prth{\hat{g}, \hat{s}^2} &= \argmax_{g, s^2} \log p\prth{\vy \mid \vX, g, s^2} \\
+  %  p_{\mathrm{post}}\prth{\vv \mid \vy, \vX} &\propto p\prth{\vy \mid \vX, \vv, \hat{s}^2} p\prth{\vv \mid \hat{g}}
   %\end{align*}
 
   %\begin{equation*}
-  %  \prth{\tilde{\sigma}, \tilde{\vv}, \tilde{\bs\Lambda}}
+  %  q \in \mathcal {Q}
   %\end{equation*}
+
+  %\begin{equation*}
+  %  q(\vv) = \prod_j q_j(\beta_j)
+  %\end{equation*}
+
+  %\begin{equation*}
+  %  \hat{q}\prth{\vv} \triangleq \argmin_{q \in \mathcal{Q}} D_{\mathrm{KL}}\prth{q\prth{\vv} \parallel p_{\mathrm{post}}}
+  %\end{equation*}
+
+  %\begin{equation*}
+  %  F(q) = \expect_{q(\vv)} \sqbr{\log p\prth{\vy \mid \vX}} - D_{\mathrm{KL}}\prth{q\prth{\vv} \parallel p_{\mathrm{post}}} 
+  %\end{equation*}
+
+  %\begin{equation*}
+  %  \hat{q}\prth{\vv} \triangleq \argmax_{q \in \mathcal{Q}} F(q)
+  %\end{equation*}
+
+  %\begin{equation*}
+  %  F(q, g, s^2) = \expect_{q(\vv)} \sqbr{\log p\prth{\vy \mid \vX, \vv, s^2}} - D_{\mathrm{KL}}\prth{q\prth{\vv} \parallel g\prth{\vv}} 
+  %\end{equation*}
+
+  %\begin{equation*}
+  %  \hat{q}, \hat{g}, \hat{s}^2 = \argmax_{q, g, s^2} F(q, g, s^2)
+  %\end{equation*}
+
+  %\begin{align*}
+  %  h\prth{\bs\theta, g, s^2} &\triangleq - \max_{\color{secondary} q:\,\expect_q[\vv] = \bs\theta} F(q, g, s^2) \\
+  %  &= \frac{1}{2s^2} \norm{\vy - \vX\bs\theta}^2 + \sum_{j=1}^{P} {\color{primary} \rho(\theta_j, g, v_j^2)}
+  %               {\color{hidden} -\frac{1}{2} \sum_{j=1}^{P}\log(d_j^2) + \frac{N - P}{2} \log(2\pi s^2)}
+  %\end{align*}
+
+  %\begin{equation*}
+  %d_j^2 = (\vx_j^{\transpose}\vx_j)^{-1}, v_j^2 = s^2 d_j^2
+  %\end{equation*}
+
+  %\begin{align*}
+  %  {\color{primary} \rho \prth{S_{g, v_j}(z_j), g, v_j^2}} &= - \ell_{\mathrm{NM}} \prth{z_j \mid g, v_j} - \frac{1}{2 v_j^2}\prth{z_j - S_{g, v_j}(z_j)}^2 \\
+  %  {\color{primary} \rho'\prth{S_{g, v_j}(z_j), g, v_j^2}} &= - \ell_{\mathrm{NM}}' \prth{z_j \mid g, v_j}
+  %\end{align*}
+
+  %\begin{equation*}
+  %  \hat{\bs\theta}, \hat{g}, \hat{s}^2 = \argmin_{\bs\theta, g, s^2} h\prth{\bs\theta, g, s^2}, \quad \hat{\bs\theta} = \hat{\vv} = \expect_{\hat{q}}\sqbr{\vv}
+  %\end{equation*}
+
+  %\begin{align*}
+  %  \tilde{h}\prth{S_{g, \vvv}(\vz), g, s^2} &= \frac{1}{2s^2} \norm{\vy - \vX S_{g, \vvv}(\vz)}^2 + \sum_{j=1}^{P} {\color{primary} \rho(S_{g, v_j}(z_j), g, v_j^2)}
+  %               {\color{hidden} + \ldots} \\
+  %  \hat{\vz}, \hat{g}, \hat{s}^2 &= \argmin_{\vz, g, s^2} \tilde{h}\prth{S_{g, \vvv}(\vz), g, s^2}, \quad \hat{\bs\theta} = \hat{\vv} = S_{\hat{g}, \hat{\vvv}}(\hat{\vz})
+  %\end{align*}
+
+  %\begin{align*}
+  %  z_j &= S_{g, v_j}^{-1}(\theta_j) = T\prth{\theta_j, g, v_j^2} \\
+  %  \rho\prth{\theta_j, g, v_j^2} &= - \ell_{\mathrm{NM}} \prth{T\prth{\theta_j, g, v_j^2} \mid g, v_j} - \frac{1}{2 v_j^2}\prth{T\prth{\theta_j, g, v_j^2} - \theta_j}^2
+  %\end{align*}
+
+  %% Normal Means Model
+  %\begin{align*}
+  %  z \mid \mu, v &\sim \mathcal{N}\prth{z \mid \mu, v^2} \\
+  %  \mu \mid g &\sim g\prth{\cdot}\\
+  %  \ell_{\mathrm{NM}} \prth{z \mid g, v} &\triangleq \log p\prth{z \mid g, v}\\
+  %  S_{g, v}(z) &= \expect_{q^{\mathrm{NM}}}\sqbr{\mu} = z + v^2 \ell_{\mathrm{NM}}'
+  %\end{align*}
 
 }
 
